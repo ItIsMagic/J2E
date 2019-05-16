@@ -1,4 +1,4 @@
-package com.mivi.projet.init.spring.mivi;
+package com.burger;
 
 import lombok.Getter;
 import lombok.ToString;
