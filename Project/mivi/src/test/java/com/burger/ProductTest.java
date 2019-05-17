@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 //@ActiveProfiles("integration")
 @RunWith(SpringRunner.class)
 //@SpringBootTest(webEnvironment = DEFINED_PORT, properties = "server.port=3306")
-@SpringBootTest
+//@SpringBootTest
 @AutoConfigureMockMvc
 @Transactional
 public class ProductTest {
