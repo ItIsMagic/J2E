@@ -5,7 +5,7 @@ phases:
     commands:
       - echo Build completed on date
       - mvn package
-      - cd Project/mivi/
+      - cd ./src
 
 artifacts:
   files:
