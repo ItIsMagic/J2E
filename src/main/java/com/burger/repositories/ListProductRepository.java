@@ -1,8 +1,11 @@
 package com.burger.repositories;
 
-import com.burger.model.ListProduct;
+import com.burger.Embeddable.ListProductKey;
+import com.burger.models.ListProduct;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface ListProductRepository extends JpaRepository<ListProduct, Integer> {
+@Repository
+public interface ListProductRepository extends JpaRepository<ListProduct, ListProductKey> {
 
 }
