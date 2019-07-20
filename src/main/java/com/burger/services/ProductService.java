@@ -20,17 +20,9 @@ public class ProductService {
     private ProductRepository productRepository;
 
     @Autowired
-    private CurrencyService currencyService;
-
-    @Autowired
     private ListProductRepository listProductRepository;
 
     public List<Product> getAll() {
-        try {
-            currencyService.getCurrency();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         return productRepository.findAll();
     }
 

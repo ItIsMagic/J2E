@@ -21,6 +21,6 @@ public class ProductControllerTest {
 
     @Test
     public void should_get_products() throws Exception {
-        //this.mvc.perform(get("/product/")).andExpect(status().isOk());
+        this.mvc.perform(get("/product/")).andExpect(status().isOk());
     }
 }

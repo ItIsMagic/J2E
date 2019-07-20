@@ -38,13 +38,4 @@ public class Currency {
     public void setDate(LocalDate date) {
         this.date = date;
     }
-
-    @Override
-    public String toString() {
-        return "Currency{" +
-                "rates=" + rates.size() +
-                ", base='" + base + '\'' +
-                ", date=" + date +
-                '}';
-    }
 }

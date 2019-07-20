@@ -51,8 +51,8 @@ public class CurrencyService {
 
         Currency c = new Currency();
         Map<String, BigDecimal> ratesMap = new HashMap<>();
-        ratesMap.put("USD", rates.getBigDecimal("USD"));
-        ratesMap.put("JPY", rates.getBigDecimal("JPY"));
+        ratesMap.put("USD", BigDecimal.valueOf(rates.getFloat("USD")));
+        ratesMap.put("JPY", BigDecimal.valueOf(rates.getFloat("JPY")));
 
         c.setRates(ratesMap);
         c.setBase(base);
