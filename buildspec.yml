@@ -4,8 +4,8 @@ phases:
   build:
     commands:
       - echo Build completed on date
-      - cd ./src
       - mvn package
+      - cd ./src
 
 
 artifacts:
