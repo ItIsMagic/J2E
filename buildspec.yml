@@ -5,8 +5,7 @@ phases:
     commands:
       - echo Build completed on date
       - mvn package
-      - cd ./src
-
+      - cd src/main/java/com/burger/
 
 artifacts:
   files:
