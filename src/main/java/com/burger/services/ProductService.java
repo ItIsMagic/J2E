@@ -8,6 +8,7 @@ import com.burger.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -19,9 +20,19 @@ public class ProductService {
     private ProductRepository productRepository;
 
     @Autowired
+    private CurrencyService currencyService;
+
+    @Autowired
     private ListProductRepository listProductRepository;
 
-    public List<Product> getAll() { return productRepository.findAll(); }
+    public List<Product> getAll() {
+        try {
+            currencyService.getCurrency();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return productRepository.findAll();
+    }
 
     public List<Product> getByPromotionId(int id_promotion) { return productRepository.findByPromotionId(id_promotion); }
 

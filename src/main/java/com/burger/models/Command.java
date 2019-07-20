@@ -1,6 +1,7 @@
 package com.burger.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
@@ -9,12 +10,13 @@ import java.util.Set;
 
 @Entity
 @Table(name = "Command")
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Command {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private float total;
+    private Float total;
     private int done;
     @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDate date;
@@ -27,6 +29,9 @@ public class Command {
     @Cascade(value = org.hibernate.annotations.CascadeType.ALL)
     private Set<Menu> menus;
 
+    @Transient
+    private Currency currency;
+
     public int getId() {
         return id;
     }
@@ -35,11 +40,11 @@ public class Command {
         this.id = id;
     }
 
-    public float getTotal() {
+    public Float getTotal() {
         return total;
     }
 
-    public void setTotal(float total) {
+    public void setTotal(Float total) {
         this.total = total;
     }
 
@@ -73,5 +78,13 @@ public class Command {
 
     public void setMenus(Set<Menu> menus) {
         this.menus = menus;
+    }
+
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
     }
 }

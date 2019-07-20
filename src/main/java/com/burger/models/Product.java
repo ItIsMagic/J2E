@@ -1,5 +1,7 @@
 package com.burger.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -7,6 +9,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "Product")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Product {
 
     @Id
@@ -22,6 +25,7 @@ public class Product {
     @JoinColumn(name = "id_promotion")
     private Promotion promotion;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "product", orphanRemoval = true)
     @JsonManagedReference(value = "product_list")
     Set<ListProduct> menus;
@@ -82,6 +86,7 @@ public class Product {
         this.promotion = promotion;
     }
 
+    @JsonIgnore
     public Set<ListProduct> getMenus() {
         return menus;
     }

@@ -21,6 +21,6 @@ public class MenuControllerTest {
 
     @Test
     public void should_get_products() throws Exception {
-        this.mvc.perform(get("/menu/")).andExpect(status().isAccepted());
+        this.mvc.perform(get("/menu/")).andExpect(status().isOk());
     }
 }
