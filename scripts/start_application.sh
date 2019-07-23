@@ -1,1 +1,1 @@
-sudo nohup mvn -f /home/ec2-user/ spring-boot:run &
+nohup sudo mvn -f /home/ec2-user/ spring-boot:run &
