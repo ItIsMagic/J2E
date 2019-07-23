@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -31,9 +32,9 @@ public class Product {
     private Promotion promotion;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "product", orphanRemoval = true)
+    @OneToMany(mappedBy = "product")
     @JsonManagedReference(value = "product_list")
-    Set<ListProduct> menus;
+    List<ListProduct> menus;
 
     @JsonIgnore
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
@@ -97,11 +98,11 @@ public class Product {
     }
 
     @JsonIgnore
-    public Set<ListProduct> getMenus() {
+    public List<ListProduct> getMenus() {
         return menus;
     }
 
-    public void setMenus(Set<ListProduct> menus) {
+    public void setMenus(List<ListProduct> menus) {
         this.menus = menus;
     }
 
