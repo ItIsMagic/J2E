@@ -15,7 +15,7 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
-/*
+
     @GetMapping("/")
     @ResponseBody
     public ResponseEntity<List<Product>> getAll() {
@@ -27,7 +27,7 @@ public class ProductController {
 
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
-*/
+
     @GetMapping("/{id}")
     @ResponseBody
     public ResponseEntity<Product> getOne(@PathVariable("id") int id) {
