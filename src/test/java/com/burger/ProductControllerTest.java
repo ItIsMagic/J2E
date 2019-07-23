@@ -3,6 +3,7 @@ package com.burger;
 import com.burger.models.Product;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,18 +47,21 @@ public class ProductControllerTest {
     @Test
     public void should_fail_add_product_because_no_name() throws Exception {
 
-//        this.mvc.perform(
-//                post("/product/")
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .accept(MediaType.APPLICATION_JSON)
-//                .param("name", "4")
-//                .param("price", "4")
-//                .param("highlight", "4")
-//                .param("category", "4")
-//                .param("available", "4"))
-//
-//                .andDo(print())
-//                .andExpect(status().isOk());
+        Product myTestProduct = new Product();
+        myTestProduct.setName("Mon produit de test");
+        myTestProduct.setPrice(5.42f);
+        myTestProduct.setAvailable(1);
+        myTestProduct.setCategory(1);
+        myTestProduct.setHighlight(0);
+        Gson gson = new Gson();
+        gson.toJson(myTestProduct);
+
+        this.mvc.perform(
+                post("/product/")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(gson.toJson(myTestProduct)))
+                .andExpect(status().isOk());
     }
 
     @Test
