@@ -1,11 +1,14 @@
 package com.burger.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -21,13 +24,15 @@ public class Command {
     @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDate date;
 
-    @ManyToMany
-    @Cascade(value = org.hibernate.annotations.CascadeType.ALL)
-    private Set<Product> products;
+    @OneToMany(mappedBy = "command", orphanRemoval = true)
+    @JsonManagedReference
+    List<CommandProduct> products;
 
-    @ManyToMany
-    @Cascade(value = org.hibernate.annotations.CascadeType.ALL)
-    private Set<Menu> menus;
+    @Transient
+    private List<Menu> menuList;
+
+    @Transient
+    private List<Product> productList;
 
     @Transient
     private Currency currency;
@@ -64,20 +69,28 @@ public class Command {
         this.date = date;
     }
 
-    public Set<Product> getProducts() {
+    public List<CommandProduct> getProducts() {
         return products;
     }
 
-    public void setProducts(Set<Product> products) {
+    public void setProducts(List<CommandProduct> products) {
         this.products = products;
     }
 
-    public Set<Menu> getMenus() {
-        return menus;
+    public List<Menu> getMenuList() {
+        return menuList;
     }
 
-    public void setMenus(Set<Menu> menus) {
-        this.menus = menus;
+    public void setMenuList(List<Menu> menuList) {
+        this.menuList = menuList;
+    }
+
+    public List<Product> getProductList() {
+        return productList;
+    }
+
+    public void setProductList(List<Product> productList) {
+        this.productList = productList;
     }
 
     public Currency getCurrency() {

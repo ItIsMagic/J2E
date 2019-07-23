@@ -24,12 +24,14 @@ public class CommandController {
     @GetMapping("/{id}")
     @ResponseBody
     public Command getOne(@PathVariable("id") int id) {
+
         return commandService.getOne(id);
     }
 
     @PostMapping("/")
     @ResponseBody
     public Command create(@RequestBody Command command) {
+
         return commandService.save(command);
     }
 

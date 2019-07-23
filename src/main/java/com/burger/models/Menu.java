@@ -1,16 +1,14 @@
 package com.burger.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "Menu")
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Menu {
 
     @Id
@@ -28,7 +26,10 @@ public class Menu {
 
     @OneToMany(mappedBy = "menu",  orphanRemoval = true)
     @JsonManagedReference(value = "menu_list")
-    Set<ListProduct> products;
+    List<ListProduct> products;
+
+    @Transient
+    List<Product> productList;
 
     public int getId() {
         return id;
@@ -86,11 +87,19 @@ public class Menu {
         this.promotion = promotion;
     }
 
-    public Set<ListProduct> getProducts() {
+    public List<ListProduct> getProducts() {
         return products;
     }
 
-    public void setProducts(Set<ListProduct> products) {
+    public void setProducts(List<ListProduct> products) {
         this.products = products;
+    }
+
+    public List<Product> getProductList() {
+        return productList;
+    }
+
+    public void setProductList(List<Product> productList) {
+        this.productList = productList;
     }
 }

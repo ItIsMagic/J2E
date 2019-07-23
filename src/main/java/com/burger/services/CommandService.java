@@ -1,6 +1,6 @@
 package com.burger.services;
 
-import com.burger.models.Command;
+import com.burger.models.*;
 import com.burger.models.Currency;
 import com.burger.repositories.CommandRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,14 +8,19 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class CommandService {
 
     @Autowired
     private CommandRepository commandRepository;
+
+    @Autowired
+    private MenuService menuService;
+
+    @Autowired
+    private CommandProductService cps;
 
     @Autowired
     private CurrencyService currencyService;
@@ -28,6 +33,7 @@ public class CommandService {
         Command command = commandRepository.findById(id).orElse(null);
 
         if(command != null) {
+            command.setProducts(null);
             try {
                 Currency currency = currencyService.getCurrency();
 
@@ -40,12 +46,60 @@ public class CommandService {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+
+            List<CommandProduct> cpList = cps.getByCommandId(command.getId());
+            List<Menu> menus = new ArrayList<>();
+            List<Product> products = new ArrayList<>();
+
+            for(int i = 0; i < cpList.size(); i++) {
+                CommandProduct cp = cpList.get(i);
+
+                if(cp.getMenuId() == null) {
+                    products.add(cp.getProduct());
+                    continue;
+                }
+
+                Menu menu = menuService.getOne(cp.getMenuId());
+
+                if(menu != null) {
+                    menu.setProducts(null);
+
+                    List<Product> p = new ArrayList<>();
+
+                    for(int j = 0; j < menu.getSize(); j++) {
+                        cp = cpList.get(i + j);
+                        p.add(cp.getProduct());
+
+                    }
+                    i += menu.getSize() - 1;
+
+                    menu.setProductList(p);
+                    menus.add(menu);
+                }
+            }
+
+            command.setMenuList(menus);
+            command.setProductList(products);
         }
 
         return command;
     }
 
-    public Command save(Command command) { return commandRepository.save(command); }
+    public Command save(Command command) {
+
+        Command cmd = commandRepository.save(command);
+
+        if(cmd != null) {
+            List<CommandProduct> cp = new ArrayList<>();
+            for(CommandProduct commandProduct : command.getProducts()) {
+                cp.add(cps.save(commandProduct));
+            }
+            cmd.setProducts(cp);
+        }
+
+        return cmd;
+    }
 
     public void delete(Command command) { commandRepository.delete(command); }
 

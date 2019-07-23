@@ -35,6 +35,11 @@ public class Product {
     @JsonManagedReference(value = "product_list")
     Set<ListProduct> menus;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    Set<CommandProduct> commands;
+
     public int getId() {
         return id;
     }
@@ -98,5 +103,14 @@ public class Product {
 
     public void setMenus(Set<ListProduct> menus) {
         this.menus = menus;
+    }
+
+    @JsonIgnore
+    public Set<CommandProduct> getCommands() {
+        return commands;
+    }
+
+    public void setCommands(Set<CommandProduct> commands) {
+        this.commands = commands;
     }
 }
