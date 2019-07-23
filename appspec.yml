@@ -1,4 +1,5 @@
 version:0.0
 os:linux
-ApplicationStart:
-  -location:scripts/start_application
+files:
+  -source:/*
+  -destination:/home/ec2-user
