@@ -1,1 +1,1 @@
-sudo mvn -f /home/ec2-user/ spring-boot:stop
+fuser -k 8090/tcp
