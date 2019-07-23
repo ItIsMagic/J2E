@@ -21,12 +21,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class)
+/*@RunWith(SpringRunner.class)
 @SpringBootTest
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc*/
 public class ProductControllerTest {
 
-    @Autowired
+    /*@Autowired
     private MockMvc mvc;
 /*
     @Test
@@ -34,7 +34,7 @@ public class ProductControllerTest {
         this.mvc.perform(get("/product/")).andExpect(status().isOk());
     }
 */
-    private Product getProduct() {
+    /*private Product getProduct() {
         Product product = new Product();
         product.setPrice(1);
         product.setCategory(1);
@@ -73,5 +73,5 @@ public class ProductControllerTest {
 //                .param("category", "4")
 //                .param("available", "4")
 //        ).andExpect(status().isInternalServerError());
-    }
+    }*/
 }
