@@ -1,1 +1,2 @@
-
+ApplicationStart:
+  -location: scripts/start_application
