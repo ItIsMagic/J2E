@@ -1,3 +1,3 @@
 #!/bin/bash
-screen sudo mvn -f /home/ec2-user/ spring-boot:run
+sudo mvn -f /home/ec2-user/ package
 exit 0
