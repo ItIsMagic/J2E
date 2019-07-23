@@ -22,4 +22,5 @@ public class PromotionControllerTest {
     public void should_get_products() throws Exception {
         this.mvc.perform(get("/promotion/")).andExpect(status().isOk());
     }
+
 }
