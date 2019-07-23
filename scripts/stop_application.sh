@@ -1,1 +1,2 @@
-fuser -k 8090/tcp
+sudo fuser -k 8090/tcp
+exit 0
