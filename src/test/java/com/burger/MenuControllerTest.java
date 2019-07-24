@@ -57,7 +57,7 @@ public class MenuControllerTest {
         myTestMenu.setName("Mon meu de test");
         myTestMenu.setAvailable(1);
         myTestMenu.setPromotion(promotions.get(0));
-        myTestMenu.setProductList(menuProducts);
+        myTestMenu.setProducts(menuProducts);
         myTestMenu.setHighlight(0);
         myTestMenu.setSize(5);
         return myTestMenu;
