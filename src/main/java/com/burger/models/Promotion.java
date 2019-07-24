@@ -2,11 +2,31 @@ package com.burger.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
 import javax.persistence.*;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Set;
+
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "Promotion")
@@ -19,8 +39,12 @@ public class Promotion {
     private String prerequisite;
     private int available;
     @JsonFormat(pattern="yyyy-MM-dd")
+//    @JsonSerialize(using = LocalDateSerializer.class)
+//    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate start_date;
     @JsonFormat(pattern="yyyy-MM-dd")
+//    @JsonSerialize(using = LocalDateSerializer.class)
+//    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate end_date;
 
 //    @OneToMany
@@ -76,5 +100,35 @@ public class Promotion {
 
     public void setEnd_date(LocalDate end_date) {
         this.end_date = end_date;
+    }
+
+    public class LocalDateSerializer extends StdSerializer<LocalDate> {
+
+        public LocalDateSerializer() {
+            super(LocalDate.class);
+        }
+
+        @Override
+        public void serialize(LocalDate value, JsonGenerator generator, SerializerProvider provider) throws IOException {
+            generator.writeString(value.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        }
+    }
+
+    public class LocalDateDeserializer extends StdDeserializer<LocalDate> {
+
+        protected LocalDateDeserializer() {
+            super(LocalDate.class);
+        }
+
+        @Override
+        public LocalDate deserialize(JsonParser parser, DeserializationContext context) throws IOException {
+            String date = parser.getText();
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                return sdf.parse(date).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            } catch (Exception e) {
+                return null;
+            }
+        }
     }
 }
