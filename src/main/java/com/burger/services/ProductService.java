@@ -27,6 +27,10 @@ public class ProductService {
         return productRepository.findAll();
     }
 
+    public List<Product> getByHighlight(int highlight) { return productRepository.findByHighlight(highlight); }
+
+    public List<Product> getByAvailable(int available) { return productRepository.findByAvailable(available); }
+
     public List<Product> getByPromotionId(int id_promotion) { return productRepository.findByPromotionId(id_promotion); }
 
     public Product getOne(int id) { return productRepository.findById(id).orElse(null); }

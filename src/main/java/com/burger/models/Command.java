@@ -1,15 +1,13 @@
 package com.burger.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "Command")
@@ -20,9 +18,9 @@ public class Command {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private Float total;
-    private int done;
+    private int done = 0;
     @JsonFormat(pattern="yyyy-MM-dd")
-    private LocalDate date;
+    private LocalDate date = LocalDate.of(new Date().getYear() + 1900, new Date().getMonth() + 1, new Date().getDate());
 
     @OneToMany(mappedBy = "command", orphanRemoval = true)
     @JsonManagedReference

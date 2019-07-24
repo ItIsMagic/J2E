@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface MenuRepository extends JpaRepository<Menu, Integer> {
     List<Menu> findByPromotionId(int id_promotion);
+    List<Menu> findByHighlight(int highlight);
+    List<Menu> findByAvailable(int available);
 }

@@ -23,10 +23,23 @@ public class MenuController {
         return menuService.getAll();
     }
 
+
     @GetMapping(path="/{id}")
     @ResponseBody
     public Menu getOne(@PathVariable int id) {
         return menuService.getOne(id);
+    }
+
+    @GetMapping(path="/highlight")
+    @ResponseBody
+    public List<Menu> getByHighlight() {
+        return menuService.getByHighlight(1);
+    }
+
+    @GetMapping(path="/available")
+    @ResponseBody
+    public List<Menu> getByAvailable() {
+        return menuService.getByAvailable(1);
     }
 
     @GetMapping("/promotion/{id}")

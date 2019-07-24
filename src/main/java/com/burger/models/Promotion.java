@@ -1,6 +1,7 @@
 package com.burger.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "Promotion")
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Promotion {
 
     @Id
@@ -23,12 +25,13 @@ public class Promotion {
     @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDate end_date;
 
-//    @OneToMany
-//    private List<Product> products;
-//
-//    @OneToMany(mappedBy = "menu_promotion", cascade = CascadeType.ALL)
-//    @JsonManagedReference
-//    private Set<Menu> menus;
+    @OneToMany(mappedBy = "promotion")
+    @JsonManagedReference
+    private List<Product> products;
+
+    @OneToMany(mappedBy = "promotion")
+    @JsonManagedReference
+    private List<Menu> menus;
 
     public int getId() {
         return id;
@@ -76,5 +79,21 @@ public class Promotion {
 
     public void setEnd_date(LocalDate end_date) {
         this.end_date = end_date;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+
+    public List<Menu> getMenus() {
+        return menus;
+    }
+
+    public void setMenus(List<Menu> menus) {
+        this.menus = menus;
     }
 }

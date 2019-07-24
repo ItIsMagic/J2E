@@ -1,5 +1,6 @@
 package com.burger.controllers;
 
+import com.burger.models.Menu;
 import com.burger.models.Product;
 import com.burger.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,18 @@ public class ProductController {
         }
 
         return new ResponseEntity<>(product, HttpStatus.OK);
+    }
+
+    @GetMapping(path="/highlight")
+    @ResponseBody
+    public List<Product> getByHhighlight() {
+        return productService.getByHighlight(1);
+    }
+
+    @GetMapping(path="/available")
+    @ResponseBody
+    public List<Product> getByAvailable() {
+        return productService.getByAvailable(1);
     }
 
     @GetMapping("/promotion/{id}")

@@ -63,7 +63,7 @@ public class CommandService {
                 Menu menu = menuService.getOne(cp.getMenuId());
 
                 if(menu != null) {
-                    menu.setProducts(null);
+                    menu.setProductList(null);
 
                     List<Product> p = new ArrayList<>();
 
@@ -74,7 +74,7 @@ public class CommandService {
                     }
                     i += menu.getSize() - 1;
 
-                    menu.setProductList(p);
+                    menu.setProducts(p);
                     menus.add(menu);
                 }
             }

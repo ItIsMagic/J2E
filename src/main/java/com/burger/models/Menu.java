@@ -1,5 +1,7 @@
 package com.burger.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -22,14 +24,16 @@ public class Menu {
 
     @ManyToOne
     @JoinColumn(name = "id_promotion")
+    @JsonBackReference
     private Promotion promotion;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "menu",  orphanRemoval = true)
     @JsonManagedReference(value = "menu_list")
-    List<ListProduct> products;
+    List<ListProduct> productList;
 
     @Transient
-    List<Product> productList;
+    List<Product> products;
 
     public int getId() {
         return id;
@@ -87,19 +91,20 @@ public class Menu {
         this.promotion = promotion;
     }
 
-    public List<ListProduct> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<ListProduct> products) {
-        this.products = products;
-    }
-
-    public List<Product> getProductList() {
+    @JsonIgnore
+    public List<ListProduct> getProductList() {
         return productList;
     }
 
-    public void setProductList(List<Product> productList) {
+    public void setProductList(List<ListProduct> productList) {
         this.productList = productList;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 }

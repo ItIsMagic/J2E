@@ -1,5 +1,6 @@
 package com.burger.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -29,6 +30,7 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name = "id_promotion")
+    @JsonBackReference
     private Promotion promotion;
 
     @JsonIgnore
@@ -40,6 +42,9 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     @JsonManagedReference
     Set<CommandProduct> commands;
+
+    @Transient
+    Integer position;
 
     public int getId() {
         return id;
@@ -113,5 +118,13 @@ public class Product {
 
     public void setCommands(Set<CommandProduct> commands) {
         this.commands = commands;
+    }
+
+    public Integer getPosition() {
+        return position;
+    }
+
+    public void setPosition(Integer position) {
+        this.position = position;
     }
 }
