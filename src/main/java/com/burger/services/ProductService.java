@@ -1,7 +1,6 @@
 package com.burger.services;
 
 import com.burger.models.ListProduct;
-import com.burger.models.Menu;
 import com.burger.models.Product;
 import com.burger.repositories.ListProductRepository;
 import com.burger.repositories.ProductRepository;

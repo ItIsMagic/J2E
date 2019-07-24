@@ -18,15 +18,15 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     @NotNull
     private String name;
     @NotNull
-    private float price;
-    private int highlight =  0;
+    private Float price;
+    private Integer highlight =  0;
     @NotNull
-    private int category;
-    private int available = 1;
+    private Integer category;
+    private Integer available = 1;
 
     @ManyToOne
     @JoinColumn(name = "id_promotion")
@@ -46,11 +46,11 @@ public class Product {
     @Transient
     Integer position;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -62,35 +62,35 @@ public class Product {
         this.name = name;
     }
 
-    public float getPrice() {
+    public Float getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 
-    public int getHighlight() {
+    public Integer getHighlight() {
         return highlight;
     }
 
-    public void setHighlight(int highlight) {
+    public void setHighlight(Integer highlight) {
         this.highlight = highlight;
     }
 
-    public int getCategory() {
+    public Integer getCategory() {
         return category;
     }
 
-    public void setCategory(int category) {
+    public void setCategory(Integer category) {
         this.category = category;
     }
 
-    public int getAvailable() {
+    public Integer getAvailable() {
         return available;
     }
 
-    public void setAvailable(int available) {
+    public void setAvailable(Integer available) {
         this.available = available;
     }
 
