@@ -60,7 +60,7 @@ public class CommandService {
                     continue;
                 }
 
-                Menu menu = menuService.getOne(cp.getMenuId());
+                Menu menu = menuService.getBasicOne(cp.getMenuId());
 
                 if(menu != null) {
                     menu.setProductList(null);
@@ -86,16 +86,22 @@ public class CommandService {
         return command;
     }
 
+    public List<Command> getByDone(int done) {
+        return commandRepository.findByDone(done);
+    }
+
     public Command save(Command command) {
 
         Command cmd = commandRepository.save(command);
 
         if(cmd != null) {
-            List<CommandProduct> cp = new ArrayList<>();
-            for(CommandProduct commandProduct : command.getProducts()) {
-                cp.add(cps.save(commandProduct));
+            if(command.getProducts() != null) {
+                List<CommandProduct> cp = new ArrayList<>();
+                for(CommandProduct commandProduct : command.getProducts()) {
+                    cp.add(cps.save(commandProduct));
+                }
+                cmd.setProducts(cp);
             }
-            cmd.setProducts(cp);
         }
 
         return cmd;

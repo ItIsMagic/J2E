@@ -22,7 +22,7 @@ public class Command {
     @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDate date = LocalDate.of(new Date().getYear() + 1900, new Date().getMonth() + 1, new Date().getDate());
 
-    @OneToMany(mappedBy = "command", orphanRemoval = true)
+    @OneToMany(mappedBy = "command")
     @JsonManagedReference
     List<CommandProduct> products;
 

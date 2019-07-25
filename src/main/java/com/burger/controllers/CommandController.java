@@ -28,6 +28,13 @@ public class CommandController {
         return commandService.getOne(id);
     }
 
+    @GetMapping("/done/{done}")
+    @ResponseBody
+    public List<Command> getByDone(@PathVariable("done") int done) {
+
+        return commandService.getByDone(done);
+    }
+
     @PostMapping("/")
     @ResponseBody
     public Command create(@RequestBody Command command) {

@@ -25,11 +25,15 @@ public class MenuService {
 
     public List<Menu> getByAvailable(int available) { return menuRepository.findByAvailable(available); }
 
+    public Menu getBasicOne(int id) {
+        return menuRepository.findById(id).orElse(null);
+    }
+
     public Menu getOne(int id) {
         Menu menu = menuRepository.findById(id).orElse(null);
 
         if(menu != null) {
-            List<Product>  products = new ArrayList<>();
+            List<Product> products = new ArrayList<>();
             for(ListProduct lp : menu.getProductList()) {
                 Product p = lp.getProduct();
                 p.setPrice(lp.getPrice());
