@@ -1,10 +1,8 @@
 package com.burger;
 
 import com.burger.models.Product;
-import com.burger.models.Promotion;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +31,6 @@ public class ProductControllerTest {
 
     private Product getProduct() {
         Product myTestProduct = new Product();
-        myTestProduct.setId(1842);
         myTestProduct.setName("Mon produit de test");
         myTestProduct.setPrice(5.42f);
         myTestProduct.setAvailable(1);
@@ -45,36 +42,6 @@ public class ProductControllerTest {
     @Test
     public void should_get_products() throws Exception {
         this.mvc.perform(get("/product/")).andExpect(status().isOk());
-    }
-		
-    @Test
-    public void should_get_product_by_id() throws Exception {
-        Gson gson = new Gson();
-        String productName = "test.product.get.by.id.mivi";
-        Product product = getProduct();
-        product.setName(productName);
-        MvcResult result = this.mvc.perform(
-                post("/product/")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON)
-                        .content(gson.toJson(product)))
-                .andReturn();
-        Product toGet = gson.fromJson(result.getResponse().getContentAsString(), Product.class);
-
-        this.mvc.perform(get("/product/"+toGet.getId())).andExpect(status().isOk());
-
-        this.mvc.perform(MockMvcRequestBuilders.delete("/product/"+toGet.getId())).andExpect(status().isOk());
-    }
-
-    @Test
-    public void should_add() throws Exception {
-        Gson gson = new Gson();
-        this.mvc.perform(
-                post("/product/")
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-                .content(gson.toJson(getProduct())))
-                .andExpect(status().isOk());
     }
 
     @Test
@@ -198,44 +165,5 @@ public class ProductControllerTest {
                 post("/product/")
                         .content(gson.toJson(getProduct())))
                 .andExpect(status().isUnsupportedMediaType());
-    }
-
-
-    @Test
-    public void should_get_product_by_promotion_id() throws Exception {
-        Gson gson = new Gson();
-        MvcResult result = this.mvc.perform(get("/promotion/")).andReturn();
-
-        Type listType = new TypeToken<ArrayList<Promotion>>(){}.getType();
-        List<Promotion> promotions = gson.fromJson(result.getResponse().getContentAsString(), listType);
-        System.out.println(promotions);
-
-        Promotion productPromotion = null;
-        if(promotions != null && !promotions.isEmpty()) {
-            productPromotion = promotions.get(0);
-        }
-
-        Product promotedProduct = getProduct();
-        promotedProduct.setPromotion(productPromotion);
-        promotedProduct.setName("mivi.test.promoted");
-
-        this.mvc.perform(
-                post("/product/")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON)
-                        .content(gson.toJson(promotedProduct)))
-                .andExpect(status().isOk());
-
-
-        MvcResult result2 = this.mvc.perform(
-                get("/product/promotion/"+productPromotion.getId())
-                .content(gson.toJson(promotedProduct)))
-                .andExpect(status().isOk())
-                .andReturn();
-
-        Product promotedReturned = gson.fromJson(result2.getResponse().getContentAsString(), Product.class);
-
-        Assert.assertEquals(promotedProduct, promotedReturned);
-
     }
 }

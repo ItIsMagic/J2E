@@ -35,13 +35,6 @@ public class MenuControllerTest {
     private Menu getMenu() throws Exception {
 
         Gson gson = new Gson();
-        MvcResult result = this.mvc.perform(get("/promotion/")).andReturn();
-
-        Type listType = new TypeToken<ArrayList<Promotion>>(){}.getType();
-        List<Promotion> promotions = gson.fromJson(result.getResponse().getContentAsString(), listType);
-        System.out.println("promotions");
-        System.out.println(result.getResponse().getContentAsString());
-
         MvcResult resultProducts = this.mvc.perform(get("/product/")).andReturn();
 
         Type listTypeProducts = new TypeToken<ArrayList<Product>>(){}.getType();
@@ -54,9 +47,8 @@ public class MenuControllerTest {
         System.out.println(menuProducts);
 
         Menu myTestMenu = new Menu();
-        myTestMenu.setName("Mon meu de test");
+        myTestMenu.setName("Mon menu de test");
         myTestMenu.setAvailable(1);
-        myTestMenu.setPromotion(promotions.get(0));
         myTestMenu.setProducts(menuProducts);
         myTestMenu.setHighlight(0);
         myTestMenu.setSize(5);
@@ -88,20 +80,6 @@ public class MenuControllerTest {
                         .accept(MediaType.APPLICATION_JSON)
                         .content(gson.toJson(getMenu())))
                 .andExpect(status().isOk());
-    }
-
-
-    @Test
-    public void should_update_menu() throws Exception {
-        Gson gson = new Gson();
-        MvcResult result = this.mvc.perform(get("/menu/")).andReturn();
-
-        Type listType = new TypeToken<ArrayList<Menu>>(){}.getType();
-        List<Menu> menus = gson.fromJson(result.getResponse().getContentAsString(), listType);
-        Menu toUpdate = menus.get(0);
-        toUpdate.setDescription("Updated menu");
-
-        this.mvc.perform(put("/menu/"+toUpdate.getId())).andExpect(status().isOk());
     }
 
     @Test

@@ -69,13 +69,16 @@ public class ProductController {
     @ResponseBody
     public ResponseEntity<Product> create(@RequestBody Product product) {
 
-        Product p = productService.save(product);
-
         if(product == null) {
-            System.out.println("ICI INTERNAL ERROR");
-            return new ResponseEntity<>(p, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(product, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
+        if(product.getPrice() == null || product.getName() == null || product.getPromotion() == null) {
+            return new ResponseEntity<>(product, HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+
+
+        Product p = productService.save(product);
         return new ResponseEntity<>(p, HttpStatus.OK);
     }
 

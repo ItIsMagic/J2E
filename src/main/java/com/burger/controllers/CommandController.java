@@ -38,7 +38,6 @@ public class CommandController {
     @PostMapping("/")
     @ResponseBody
     public Command create(@RequestBody Command command) {
-
         return commandService.save(command);
     }
 
